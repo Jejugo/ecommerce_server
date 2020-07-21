@@ -1,0 +1,15 @@
+POST http://localhost:3001/register
+Content-Type: application/json
+
+{
+  "name": "Jeff",
+  "email": "jeff.goes@gmail.com",
+  "password": "12321321",
+  "securityNumber": "111111111",
+  "addresses": [{
+    "street": "Rua Raul Gasparini",
+    "number": "51",
+    "neighborhood": "Bosque",
+    "zipcode": "13283512"
+  }]
+}
