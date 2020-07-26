@@ -1,9 +1,14 @@
 const makeRegisterCustomer = require('./customer/registerCustomer')
+const makeVerifyEmailToken = require('./email/verifyEmailToken')
 
 const bcrypt = require('bcrypt')
-const { Customer, Address } = require('../models')
-const registerCustomer = makeRegisterCustomer({ bcrypt, Customer, Address })
+const { Customer } = require('../models')
+
+
+const registerCustomer = makeRegisterCustomer({ bcrypt, Customer })
+const verifyEmailToken = makeVerifyEmailToken({})
 
 module.exports = {
-  registerCustomer
+  registerCustomer,
+  verifyEmailToken
 }

@@ -13,3 +13,7 @@ Content-Type: application/json
     "zipcode": "13283512"
   }]
 }
+
+###
+
+GET http://localhost:3002/health

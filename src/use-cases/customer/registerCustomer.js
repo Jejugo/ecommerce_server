@@ -1,34 +1,13 @@
 const { customer: customerEntity } = require("../../entities")
-const { address: addressEntity } = require("../../entities")
 
-const makeRegisterCustomer = ({ bcrypt, Customer, Address }) => {
+const makeRegisterCustomer = ({ bcrypt, Customer }) => {
 
-  const saveToDb = async (customer, addresses, hashedPassword) => {
-    const customerCreate = await Customer.create({
+  const saveToDb = async (customer, hashedPassword) => Customer.create({
       name: customer.getName(),
       securityNumber: customer.getSecurityNumber(),
       email: customer.getEmail(),
       password: hashedPassword,
     })
-
-    //create all addresses for single customer. 
-    const addressesCreated = await Promise.all(
-      addresses.map((address) =>
-        Address.create({
-          street: address.getStreet(),
-          number: address.getNumber(),
-          neighborhood: address.getNeighborhood(),
-          complement: address.getComplement(),
-          zipcode: address.getZipcode(),
-        })
-      )
-    )
-    const idList = addressesCreated.map((addressCreated) =>
-      addressCreated.get({ plain: true }).id
-    )
-
-    await Promise.all(idList.map((id) => customerCreate.setAddress([id])))
-  }
 
   const findCustomer = async (name) =>
     Customer.findOne({
@@ -38,9 +17,6 @@ const makeRegisterCustomer = ({ bcrypt, Customer, Address }) => {
     })
 
   return async function registerCustomer(customerBody) {
-    const addresses = customerBody.addresses.map((address) =>
-      addressEntity({ ...address })
-    )
     const customer = customerEntity({
       ...customerBody,
     })
@@ -52,7 +28,9 @@ const makeRegisterCustomer = ({ bcrypt, Customer, Address }) => {
     }
 
     const hashedPassword = await bcrypt.hash(customer.getPassword(), 10)
-    await saveToDb(customer, addresses, hashedPassword)
+    await saveToDb(customer, hashedPassword)
+
+    
 
     return {
       message: "Data saved successfully.",
@@ -62,3 +40,22 @@ const makeRegisterCustomer = ({ bcrypt, Customer, Address }) => {
 }
 
 module.exports = makeRegisterCustomer
+
+
+    // //create all addresses for single customer. 
+    // const addressesCreated = await Promise.all(
+    //   addresses.map((address) =>
+    //     Address.create({
+    //       street: address.getStreet(),
+    //       number: address.getNumber(),
+    //       neighborhood: address.getNeighborhood(),
+    //       complement: address.getComplement(),
+    //       zipcode: address.getZipcode(),
+    //     })
+    //   )
+    // )
+    // const idList = addressesCreated.map((addressCreated) =>
+    //   addressCreated.get({ plain: true }).id
+    // )
+
+    // await Promise.all(idList.map((id) => customerCreate.setAddress([id])))

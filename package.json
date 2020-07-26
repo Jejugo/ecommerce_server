@@ -1,11 +1,17 @@
 {
-  "name": "ms-authentication",
+  "name": "ecommerce-server",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git:git@github.com:Jejugo/ecommerce_server.git"
+  },
   "scripts": {
-    "dev": "cp config/config.dev.json config/index.json; nodemon server/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "cp config/config.dev.json config/index.json; nodemon src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "sequelize:migrate": "npx sequelize-cli db:migrate --env sequelize",
+    "docker:run": "docker run -it -p 3002:3002  ecommerce-service:latest"
   },
   "author": "Jeff Goes",
   "license": "ISC",
@@ -15,8 +21,7 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "mysql2": "^2.1.0",
-    "sequelize": "^6.3.3",
-    "sequelize:migrate": "npx sequelize-cli db:migrate --env sequelize"
+    "sequelize": "^6.3.3"
   },
   "devDependencies": {
     "nodemon": "^2.0.4",

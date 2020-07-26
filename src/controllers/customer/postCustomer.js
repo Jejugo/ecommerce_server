@@ -8,8 +8,7 @@ const makePostCustomer = () => {
         name,
         email,
         password,
-        securityNumber,
-        addresses,
+        securityNumber
       } = httpRequest.body
       const { ip, headers } = httpRequest
       source.ip = ip
@@ -22,15 +21,14 @@ const makePostCustomer = () => {
         name,
         email,
         password,
-        securityNumber,
-        addresses,
+        securityNumber
       }
 
-      const resp = await registerCustomer(customerBody)
+      const body = await registerCustomer(customerBody)
 
       return {
         statusCode: 200,
-        body: resp,
+        body,
       }
     } catch (err) {
       return {
