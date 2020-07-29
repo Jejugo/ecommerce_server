@@ -1,40 +1,52 @@
 const { customer: customerEntity } = require("../../entities")
 
-const makeRegisterCustomer = ({ bcrypt, Customer }) => {
+const makeRegisterCustomer = ({ bcrypt, Customer, sendEmail, jwt }) => {
 
-  const saveToDb = async (customer, hashedPassword) => Customer.create({
+  const saveToDb = (customer, hashedPassword) => Customer.create({
       name: customer.getName(),
       securityNumber: customer.getSecurityNumber(),
       email: customer.getEmail(),
       password: hashedPassword,
+    }).catch(err => {
+      console.error(err)
+      new Error('ERROR_DATABASE_CUSTOMER_CREATE')
     })
 
-  const findCustomer = async (name) =>
+  const findCustomer = async (email) =>
     Customer.findOne({
       where: {
-        name,
+        email,
       },
     })
+  
+  const generateEmailToken = (email) => jwt.sign(email, process.env.EMAIL_TOKEN)
 
   return async function registerCustomer(customerBody) {
     const customer = customerEntity({
       ...customerBody,
     })
 
-    const customerFound = await findCustomer(customer.getName())
+    const customerFound = await findCustomer(customer.getEmail())
 
     if (customerFound) {
       throw new Error("Customer already exists.")
     }
 
     const hashedPassword = await bcrypt.hash(customer.getPassword(), 10)
-    await saveToDb(customer, hashedPassword)
+    const emailToken = generateEmailToken(customer.getEmail())
 
-    
+    //both has to work!!! transaction
+    await saveToDb(customer, hashedPassword)
+    await sendEmail({ name: customer.getName(), customerEmail: customer.getEmail(), emailToken })
 
     return {
       message: "Data saved successfully.",
-      data: customer,
+      data: {
+        customer: {
+          name: customer.getName(),
+          email: customer.getEmail()
+        }
+      },
     }
   }
 }

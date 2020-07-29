@@ -1,19 +1,15 @@
-POST http://localhost:3001/register
+POST http://localhost:3002/register
 Content-Type: application/json
 
 {
-  "name": "Jeff",
-  "email": "jeff.goes@gmail.com",
-  "password": "12321321",
-  "securityNumber": "111111111",
-  "addresses": [{
-    "street": "Rua Raul Gasparini",
-    "number": "51",
-    "neighborhood": "Bosque",
-    "zipcode": "13283512"
-  }]
+  "name": "Jeff Goes",
+  "email": "goes.jeffjulian@gmail.com",
+  "password": "kghtyujilop",
+  "securityNumber": "40931363861"
 }
 
 ###
 
 GET http://localhost:3002/health
+
+###

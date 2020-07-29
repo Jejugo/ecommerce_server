@@ -7,6 +7,8 @@ const {
   postEmailToken
 } = require('./controllers')
 
+dotenv.config()
+
 const cors = require('../server/cors')
 const expressCallBack = require('../server/endpoint-callback')
 
@@ -26,8 +28,7 @@ app.use((req, res, next) => {
 
 app.get('/health', expressCallBack(getHealth))
 app.post('/register', expressCallBack(postCustomer))
-app.post('/email/verification', expressCallBack(postEmailToken))
-
+app.get('/email/verification', expressCallBack(postEmailToken))
 
 app.listen(3002, () => {
   console.log('Server is listening on port 3002.')
