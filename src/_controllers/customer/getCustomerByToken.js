@@ -19,7 +19,6 @@ const makeGetCustomerByToken = ({ retrieveCustomerByToken }) => {
     }
     catch(err){
       const { status, body } = errorMessages[err.message] || { status: 400, body: err.message }
-      console.log(body)
       return {
         headers: {
           "Content-Type": "application/json",

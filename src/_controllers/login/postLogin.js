@@ -14,9 +14,7 @@ const makePostLogin = ({ loginAction }) => {
       if (headers["Referer"]) {
         source.referer = headers["Referer"]
       }
-      console.log('USERNAME: ', username, password)
       const tokens = await loginAction({ username, password })
-      console.log('tokens> ', tokens)
   
       return {
         statusCode: 200,

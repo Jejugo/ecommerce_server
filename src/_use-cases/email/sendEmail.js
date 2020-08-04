@@ -48,7 +48,6 @@ const makeSendEmail = ({ nodemailer, google } = {}) => {
 
     transporter.sendMail(mailOptions, (error, response) => {
       if (error) {
-        console.log(`error ${error}`)
         throw Error(error)
       }
       smtpTransport.close()

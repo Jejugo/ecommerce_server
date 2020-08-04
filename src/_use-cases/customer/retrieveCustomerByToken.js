@@ -18,9 +18,7 @@ const makeRetrieveCustomerByToken = ({ Customer, jwt }) => {
   }
 
   return async function retrieveCustomerByToken(token) {
-    console.log('retrieving...', token)
     const customerEmail = await jwt.verify(token.toString(), process.env.ACCESS_TOKEN_SECRET)
-    console.log(customerEmail)
     const customerFound = await findCustomer(customerEmail)
     if (!customerFound) {
       throw new Error("Customer was not found!")
