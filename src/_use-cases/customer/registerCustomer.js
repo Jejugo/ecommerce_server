@@ -1,4 +1,4 @@
-const { customer: customerEntity } = require("../../entities")
+const { customer: customerEntity } = require("../../_entities")
 
 const makeRegisterCustomer = ({ bcrypt, Customer, sendEmail, jwt }) => {
 
@@ -6,13 +6,14 @@ const makeRegisterCustomer = ({ bcrypt, Customer, sendEmail, jwt }) => {
       name: customer.getName(),
       securityNumber: customer.getSecurityNumber(),
       email: customer.getEmail(),
+      active: customer.getActive(),
       password: hashedPassword,
     }).catch(err => {
       console.error(err)
       new Error('ERROR_DATABASE_CUSTOMER_CREATE')
     })
 
-  const findCustomer = async (email) =>
+  const findCustomer = (email) =>
     Customer.findOne({
       where: {
         email,
@@ -34,7 +35,6 @@ const makeRegisterCustomer = ({ bcrypt, Customer, sendEmail, jwt }) => {
 
     const hashedPassword = await bcrypt.hash(customer.getPassword(), 10)
     const emailToken = generateEmailToken(customer.getEmail())
-
     //both has to work!!! transaction
     await saveToDb(customer, hashedPassword)
     await sendEmail({ name: customer.getName(), customerEmail: customer.getEmail(), emailToken })

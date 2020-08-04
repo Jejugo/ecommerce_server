@@ -6,8 +6,7 @@ const makeSendEmail = ({ nodemailer, google } = {}) => {
   const clientSecret = "bIrTT8XUwB3pZFZ1uDYAIy_Z"
   const refreshToken = '1//04yrbDCaYlOCoCgYIARAAGAQSNwF-L9Irr4gTu7pdnJY61JLXhUubws9GVhmGHxcF3cTAGCslB-8bQp7-350cENSnhnzS8JfrQnk'
 
-  return function sendEmail({ name, customerEmail, token }) {
-    console.log('enviando para...', name, customerEmail)
+  return function sendEmail({ name, customerEmail, emailToken }) {
     //google authentication
     const OAuth2 = google.auth.OAuth2
 
@@ -43,7 +42,7 @@ const makeSendEmail = ({ nodemailer, google } = {}) => {
       html: `<h1 style="text-align: center">Parabéns por se cadastrar no Ecommerce!</h1>
       <h3 style="text-align: center">Clique no botão abaixo para confirmar seu cadastro!</h3>
       <div style="display: flex; justify-content: center">
-      <button style="width: 200px; height: 30px; margin: 0 auto; background-color: blue; border: 0; cursor: pointer"><a style="font-size: 20px; cursor: pointer; color: white" href="localhost:3002/email/verification/${token}">Confirmar</a></button>
+      <button style="width: 200px; height: 30px; margin: 0 auto; background-color: blue; border: 0; cursor: pointer"><a style="font-size: 20px; cursor: pointer; color: white" href="http://localhost:3002/email/verification/${emailToken}">Confirmar</a></button>
       </div>`
     }
 

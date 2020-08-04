@@ -13,3 +13,9 @@ Content-Type: application/json
 GET http://localhost:3002/health
 
 ###
+
+GET http://localhost:3002/email/verification/234324324234
+
+###
+
+GET http://localhost:3002/customer/token/eyJhbGciOiJIUzI1NiJ9.Z29lcy5qZWZmanVsaWFuQGdtYWlsLmNvbQ.iaHG06InaCNbJGZMZ5y8kDbhIF2zj38pn6-iztTxWfc

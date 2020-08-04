@@ -1,0 +1,17 @@
+{
+  "WRONG_PASSWORD": {
+    "status": 400,
+    "body": {
+      "code": 1,
+      "message": "Senha inválida."
+    }
+  },
+
+  "CUSTOMER_NOT_FOUND": {
+    "status": 400,
+    "body": {
+      "code": 1,
+      "message": "Usuário não encontrado com os parâmetros fornecidos"
+    }
+  }
+}

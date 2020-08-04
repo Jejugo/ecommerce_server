@@ -20,8 +20,8 @@ RUN curl https://raw.githubusercontent.com/creationix/nvm/v0.30.1/install.sh | b
 
 RUN ["chmod", "+x", "usr/local/.nvm/nvm.sh"]
 
-COPY . /usr/${SERVICE}
-WORKDIR /usr/${SERVICE}
+COPY . /usr/$SERVICE
+WORKDIR /usr/$SERVICE
 
 RUN npm update \
     && npm install \
@@ -29,4 +29,4 @@ RUN npm update \
 
 EXPOSE 3002
 
-CMD [ "npm", "run", "dev" ]
+CMD ["npm", "run", "dev"]

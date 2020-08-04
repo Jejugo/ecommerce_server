@@ -1,6 +1,6 @@
-const { registerCustomer } = require("../../use-cases")
+const errorMessages = require("../../error-messages.json")
 
-const makePostCustomer = () => {
+const makePostCustomer = ({ registerCustomer } = {}) => {
   return async function postCustomer(httpRequest) {
     try {
       const {
@@ -8,7 +8,7 @@ const makePostCustomer = () => {
         name,
         email,
         password,
-        securityNumber
+        securityNumber,
       } = httpRequest.body
       const { ip, headers } = httpRequest
       source.ip = ip
@@ -21,7 +21,7 @@ const makePostCustomer = () => {
         name,
         email,
         password,
-        securityNumber
+        securityNumber,
       }
 
       const body = await registerCustomer(customerBody)
@@ -31,13 +31,14 @@ const makePostCustomer = () => {
         body,
       }
     } catch (err) {
+      const { status, body } = errorMessages[err.message]
       return {
         headers: {
           "Content-Type": "application/json",
         },
-        statusCode: 400,
+        statusCode: status,
         body: {
-          error: err.message,
+          error: body,
         },
       }
     }

@@ -14,14 +14,14 @@ module.exports = (controller) => {
       }
     }
     controller(httpRequest)
-      .then(httpResponse => {
-        if(httpResponse.headers){
-          res.set(httpResponse.headers)
+      .then(({ headers, statusCode, url, query, params }) => {
+        if(headers){
+          res.set(headers)
         }
 
         res.type('json')
-        res.status(httpResponse.statusCode).send(httpResponse.body)
+        res.status(statusCode).redirect(`${url}/${query}/${params}`)
       })
-      .catch(err => res.status(500).send({ error: 'An unknown error has ocurred.', message: err.message }))
+      .catch(err => res.status(500).send({error: 'An unknown error has ocurred.', message: err}))
   }
 }

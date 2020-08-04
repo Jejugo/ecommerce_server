@@ -4,13 +4,16 @@ const dotenv = require('dotenv')
 const { 
   getHealth,
   postCustomer,
-  postEmailToken
-} = require('./controllers')
+  postLogin,
+  getEmailToken,
+  getCustomerByToken,
+} = require('./_controllers')
 
 dotenv.config()
 
 const cors = require('../server/cors')
 const expressCallBack = require('../server/endpoint-callback')
+const redirectCallBack = require('../server/endpoint-redirect')
 
 const app = express()
 app.use(bodyParser.json())
@@ -28,7 +31,9 @@ app.use((req, res, next) => {
 
 app.get('/health', expressCallBack(getHealth))
 app.post('/register', expressCallBack(postCustomer))
-app.get('/email/verification', expressCallBack(postEmailToken))
+app.post('/login', expressCallBack(postLogin))
+app.get('/customer/token/:token',  expressCallBack(getCustomerByToken))
+app.get('/email/verification/:code', redirectCallBack(getEmailToken))
 
 app.listen(3002, () => {
   console.log('Server is listening on port 3002.')
