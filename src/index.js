@@ -30,10 +30,11 @@ app.use((req, res, next) => {
 });
 
 app.get('/health', expressCallBack(getHealth))
+//authentication
 app.post('/register', expressCallBack(postCustomer))
 app.post('/login', expressCallBack(postLogin))
-app.get('/customer/token/:token',  expressCallBack(getCustomerByToken))
 app.get('/email/verification/:code', redirectCallBack(getEmailToken))
+app.get('/customer/token/:token',  expressCallBack(getCustomerByToken))
 
 app.listen(3002, () => {
   console.log('Server is listening on port 3002.')

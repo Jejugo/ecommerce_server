@@ -20,6 +20,8 @@ const makeRetrieveCustomerByToken = ({ Customer, jwt }) => {
   return async function retrieveCustomerByToken(token) {
     const customerEmail = await jwt.verify(token.toString(), process.env.ACCESS_TOKEN_SECRET)
     const customerFound = await findCustomer(customerEmail)
+    //find address with customerId
+    //send back data with addresses and personal data
     if (!customerFound) {
       throw new Error("Customer was not found!")
     } else {
