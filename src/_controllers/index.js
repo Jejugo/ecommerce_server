@@ -7,6 +7,10 @@ const makeGetCustomerByToken = require('./customer/getCustomerByToken')
 const makeGetEmailToken = require("./email/getEmailToken")
 //Login
 const makePostLogin = require('./login/postLogin')
+//Auth
+const makePostRefreshToken = require('./authentication/postRefreshToken')
+
+const jwt = require('jsonwebtoken')
 
 //Use-cases...
 const { verifyEmailToken } = require("../_use-cases")
@@ -20,11 +24,13 @@ const postCustomer = makePostCustomer({ registerCustomer })
 const getEmailToken = makeGetEmailToken({ verifyEmailToken })
 const getCustomerByToken = makeGetCustomerByToken({ retrieveCustomerByToken })
 const postLogin = makePostLogin({ loginAction })
+const postRefreshToken = makePostRefreshToken({ jwt })
 
 module.exports = {
   getHealth,
   postCustomer,
   getEmailToken,
   getCustomerByToken,
-  postLogin
+  postLogin,
+  postRefreshToken
 }

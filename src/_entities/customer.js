@@ -1,5 +1,5 @@
 const makeCustomer = ({ isEmailValid } = {}) => {
-  return function customer({ name, email, password, securityNumber, bankCards = [], active = false, createdOn = Date.now(), modifiedOn = Date.now() }){
+  return function customer({ name, email, password, securityNumber, active = false, createdOn = Date.now(), modifiedOn = Date.now() }){
     
     if(!name){
       throw new Error('Name must be provided.')
@@ -23,7 +23,6 @@ const makeCustomer = ({ isEmailValid } = {}) => {
       getSecurityNumber: () => securityNumber,
       getPassword: () => password,
       getActive: () => active,
-      getCards: () => bankCards,
       getCreatedOn: () => createdOn,
       getModifiedOn: () => modifiedOn
     })
