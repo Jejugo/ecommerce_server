@@ -12,11 +12,11 @@ GET http://localhost:3002/email/verification/234324324234
 
 ###
 POST http://localhost:3002/refresh/token
-Content-Type: application/json
+Content-Type: application/json  
 
 {
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImdvZXMuamVmZmp1bGlhbkBnbWFpbC5jb20iLCJpYXQiOjE1OTY4NTA4MDN9.RhCL58wJqSVHr29UUznvJniUauIEV4eIZAVDwBpdo-A"
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImdvZXMuamVmZmp1bGlhbkBnbWFpbC5jb20iLCJpYXQiOjE1OTY5OTIzMTN9.7G5Txvl6SJcRxIuLrj_cmEE7wXsPLybt2UKadLf3znc"
 }
 
 ###
-GET http://localhost:3002/customer/token/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImdvZXMuamVmZmp1bGlhbkBnbWFpbC5jb20iLCJpYXQiOjE1OTY4NTYyNzAsImV4cCI6MTU5Njg1ODA3MH0.e4_MQB9UWjkxBSmlPkTWjdZOtWBDhfvIDRUqa2Ji03g
+GET http://localhost:3002/customer/token/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImdvZXMuamVmZmp1bGlhbkBnbWFpbC5jb20iLCJpYXQiOjE1OTY5OTUxMzgsImV4cCI6MTU5Njk5NjkzOH0.Fm7MvaetkyKHdIKtuRzZs8O54Jed2of7tmQnCULrQCY

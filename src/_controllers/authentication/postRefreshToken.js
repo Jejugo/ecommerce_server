@@ -4,7 +4,6 @@ const makePostRefreshToken = ({ jwt }) => {
 
   return async function postRefreshToken(httpResponse) {
     try {
-      console.log(httpResponse.body)
       const { token: refreshToken } = httpResponse.body;
       if (!refreshToken) return { statusCode: 401 };
       //check on database if refreshToken exists
@@ -22,13 +21,14 @@ const makePostRefreshToken = ({ jwt }) => {
       }
     }
     catch(err){
+      const { status, body } = errorMessages[err.message] || { status: 400, body: err.message }
       return {
         headers: {
           'Content-Type': 'application/json'
         },
-        statusCode: 400,
+        statusCode: status,
         body: {
-          error: err.message
+          error: body
         }
       }
     }

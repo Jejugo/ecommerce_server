@@ -20,7 +20,6 @@ module.exports = {
       number: {
         allowNull: false,
         type: Sequelize.STRING,
-        unique: true,
       },
       zipcode: {
         allowNull: false,

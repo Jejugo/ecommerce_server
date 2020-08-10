@@ -1,14 +1,22 @@
-const makeRetrieveCustomerByToken = ({ Customer, Address, jwt, builder }) => {
+const makeRetrieveCustomerByToken = ({ Customer, Address, BankCard, jwt, builder }) => {
+  const findBankCards = (id) =>
+    BankCard.findAll({
+      where: {
+        customerId: id,
+      },
+      raw: true,
+    })
+
   const findCustomer = ({ username }) =>
     Customer.findOne({
       where: {
-        email: username
+        email: username,
       },
       include: [
         {
           model: Address,
           as: "address",
-          through: { attributes: [] }
+          through: { attributes: [] },
         },
       ],
       raw: true,
@@ -28,19 +36,22 @@ const makeRetrieveCustomerByToken = ({ Customer, Address, jwt, builder }) => {
       token.toString(),
       process.env.ACCESS_TOKEN_SECRET
     )
-    console.log("customerEmail: ", customerEmail)
+    console.log("2 customerEmail: ", customerEmail)
     const customerFound = await findCustomer(customerEmail)
-    const customerFoundFormatted = builder.customerByTokenResponse(customerFound)
-    //find address with customerId
-    //send back data with addresses and personal data
     if (!customerFound) {
+      console.log('3')
       throw new Error("Customer was not found!")
     } else {
+      const customerBankCards = await findBankCards(customerFound.id)
+      const customerFoundFormatted = builder.customerByTokenResponse(
+        customerFound, customerBankCards
+      )
       activateCustomer(customerFound)
       const { password, ...customerObj } = customerFoundFormatted
-      console.log(customerObj)
+      console.log(`5`, customerObj)
       return customerObj
     }
+
   }
 }
 

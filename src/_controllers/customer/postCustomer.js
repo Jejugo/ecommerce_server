@@ -31,7 +31,7 @@ const makePostCustomer = ({ registerCustomer } = {}) => {
         body,
       }
     } catch (err) {
-      const { status, body } = errorMessages[err.message]
+      const { status, body } = errorMessages[err.message] || { status: 400, body: err.message }
       return {
         headers: {
           "Content-Type": "application/json",
