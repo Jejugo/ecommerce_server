@@ -54,7 +54,7 @@ const makeRegisterCustomer = ({ bcrypt, Customer, sendEmail, jwt }) => {
 module.exports = makeRegisterCustomer
 
 
-    // //create all addresses for single customer. 
+    //create all addresses for single customer. 
     // const addressesCreated = await Promise.all(
     //   addresses.map((address) =>
     //     Address.create({

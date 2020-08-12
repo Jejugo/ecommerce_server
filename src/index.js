@@ -7,7 +7,8 @@ const {
   postLogin,
   getEmailToken,
   getCustomerByToken,
-  postRefreshToken
+  postRefreshToken,
+  putCustomer
 } = require('./_controllers')
 
 dotenv.config()
@@ -23,16 +24,18 @@ app.use(bodyParser.json())
 app.use((req, res, next) => {
   const origin = req.headers.origin;
   if(cors.allowedOrigins.includes(origin)){
-    res.setHeader("Access-Control-Allow-Origin", origin);
+    res.setHeader("Access-Control-Allow-Origin", origin)
   }
-
+  res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
 
 app.get('/health', expressCallBack(getHealth))
-//authentication
 app.post('/register', expressCallBack(postCustomer))
+app.put('/customer/:id', expressCallBack(putCustomer))
+
+//authentication
 app.post('/login', expressCallBack(postLogin))
 app.get('/email/verification/:code', redirectCallBack(getEmailToken))
 app.get('/customer/token/:token',  expressCallBack(getCustomerByToken))

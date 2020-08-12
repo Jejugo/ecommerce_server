@@ -3,6 +3,7 @@ const makeVerifyEmailToken = require('./email/verifyEmailToken')
 const makeSendEmail = require('./email/sendEmail')
 const makeRetrieveCustomerByToken = require('./customer/retrieveCustomerByToken')
 const makeLoginAction = require('./login/loginAction')
+const makeUpdateCustomer = require('./customer/updateCustomer')
 
 const bcrypt = require('bcrypt')
 const { Customer } = require('../models')
@@ -18,6 +19,7 @@ const registerCustomer = makeRegisterCustomer({ bcrypt, Customer, sendEmail, jwt
 const verifyEmailToken = makeVerifyEmailToken({ jwt, Customer })
 const retrieveCustomerByToken = makeRetrieveCustomerByToken({ Customer, Address, BankCard, jwt, builder })
 const loginAction = makeLoginAction({ jwt, bcrypt, Customer })
+const updateCustomer = makeUpdateCustomer({ Customer, Address })
 
 
 module.exports = {
@@ -25,5 +27,6 @@ module.exports = {
   verifyEmailToken,
   sendEmail,
   retrieveCustomerByToken,
-  loginAction
+  loginAction,
+  updateCustomer
 }
