@@ -1,3 +1,5 @@
+const errorMessages = require("../../error-messages.json")
+
 const makePutCustomer = ({ updateCustomer }) => {
   return async function putCustomer(httpRequest) {
     try{

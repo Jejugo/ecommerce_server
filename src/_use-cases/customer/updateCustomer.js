@@ -1,4 +1,4 @@
-const makeUpdateCustomer = ({ Customer }) => {
+const makeUpdateCustomer = ({ Customer, Address }) => {
   const updateCustomerById = async (id, customer) =>{
     const CustomerInstance = await Customer.findOne({where: { id }})
 
@@ -13,8 +13,19 @@ const makeUpdateCustomer = ({ Customer }) => {
   const updateAddress = async (customerUpdated, address) => {
     //for now, customer can only have ONE address.
     //That is why Im getting only the first occurance
-    const [ Address ] = await customerUpdated.getAddress()
-    return Address.update({
+    const [ AddressInst ] = await customerUpdated.getAddress()
+    if(AddressInst){
+      return AddressInst.update({
+        street: address.street,
+        neighborhood: address.neighborhood,
+        number: address.number,
+        zipcode: address.zipcode,
+        complement: address.complement,
+        updatedAt: new Date().toISOString()
+      })
+    }
+
+    const addressCreated = await Address.create({
       street: address.street,
       neighborhood: address.neighborhood,
       number: address.number,
@@ -22,6 +33,9 @@ const makeUpdateCustomer = ({ Customer }) => {
       complement: address.complement,
       updatedAt: new Date().toISOString()
     })
+
+    const id = addressCreated.get({ plain: true }).id
+    customerUpdated.setAddress([id])
   }
   
 
