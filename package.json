@@ -11,7 +11,8 @@
     "dev": "cp config/config.dev.json config/index.json; nodemon src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "sequelize:migrate": "npx sequelize-cli db:migrate --env sequelize",
-    "docker:run": "docker run -it -p 3002:3002  ecommerce-service:latest"
+    "docker:run": "docker run -it -p 3002:3002  ecommerce-service:latest",
+    "sequelize:generate:migration": "npx sequelize migration:generate --name [name_of_your_migration]"
   },
   "author": "Jeff Goes",
   "license": "ISC",

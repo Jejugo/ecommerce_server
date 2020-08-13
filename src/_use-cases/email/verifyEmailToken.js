@@ -1,5 +1,11 @@
 const makeVerifyEmailToken = ({ jwt, Customer } = {}) => {
 
+  const activateCustomer = ({ email, active }) => {
+    if (active !== 1)
+      return Customer.update({ active: true }, { where: { email } })
+    return null
+  }
+
   const findCustomer = (email) =>
   Customer.findOne({
     where: {
@@ -15,6 +21,8 @@ const makeVerifyEmailToken = ({ jwt, Customer } = {}) => {
     if (!customerFound) {
       throw new Error("User is not valid.")
     }
+
+    await activateCustomer(customerFound)
 
     return true
   }

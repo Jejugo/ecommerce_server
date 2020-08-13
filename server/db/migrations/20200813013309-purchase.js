@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = {
-  up: async (queryInterface, Sequelize) => queryInterface.createTable('BankCards', {
+  up: async (queryInterface, Sequelize) => queryInterface.createTable('Purchase', {
     id: {
       allowNull: false,
       autoIncrement: true,
@@ -16,26 +16,17 @@ module.exports = {
       },
       onDelete: 'CASCADE'
     },
-    number: {
+    productId: {
       allowNull: false,
-      type: Sequelize.STRING,
-      unique: true,
+      type: Sequelize.INTEGER,
+      references: {
+        model: 'Products', key: 'id'
+      },
+      onDelete: 'CASCADE'
     },
-    flag: {
+    quantity: {
       allowNull: false,
-      type: Sequelize.STRING,
-    },
-    expiration: {
-      allowNull: false,
-      type: Sequelize.DATE,
-    },
-    cvv: {
-      allowNull: false,
-      type: Sequelize.STRING,
-    },
-    name: {
-      allowNull: false,
-      type: Sequelize.STRING
+      type: Sequelize.INTEGER,
     },
     createdAt: {
       allowNull: false,
@@ -46,5 +37,6 @@ module.exports = {
       type: Sequelize.DATE,
     },
   }),
-  down: async (queryInterface, Sequelize) => queryInterface.dropTable('BankCards')
+
+  down: async (queryInterface, Sequelize) => queryInterface.dropTable('Purchase')
 };

@@ -1,4 +1,4 @@
-customerByTokenResponse = (customer, bankCards) => ({
+customerByTokenResponse = (customer) => ({
   id: customer.id,
   name: customer.name,
   securityNumber: customer.securityNumber,
@@ -15,8 +15,7 @@ customerByTokenResponse = (customer, bankCards) => ({
     complement: customer["address.complement"],
     createdAt: customer["address.createdAt"],
     updatedAt: customer["address.updatedAt"],
-  },
-  bankCards
+  }
 })
 
 module.exports = {

@@ -1,12 +1,4 @@
-const makeRetrieveCustomerByToken = ({ Customer, Address, BankCard, jwt, builder }) => {
-  const findBankCards = (id) =>
-    BankCard.findAll({
-      where: {
-        customerId: id,
-      },
-      raw: true,
-    })
-
+const makeRetrieveCustomerByToken = ({ Customer, Address, jwt, builder }) => {
   const findCustomer = ({ username }) =>
     Customer.findOne({
       where: {
@@ -25,6 +17,7 @@ const makeRetrieveCustomerByToken = ({ Customer, Address, BankCard, jwt, builder
       throw new Error("CUSTOMER_NOT_FOUND")
     })
 
+    //is this necessary?
   const activateCustomer = ({ email, active }) => {
     if (active !== 1)
       return Customer.update({ active: true }, { where: { email } })
@@ -36,19 +29,15 @@ const makeRetrieveCustomerByToken = ({ Customer, Address, BankCard, jwt, builder
       token.toString(),
       process.env.ACCESS_TOKEN_SECRET
     )
-    console.log("2 customerEmail: ", customerEmail)
     const customerFound = await findCustomer(customerEmail)
     if (!customerFound) {
-      console.log('3')
       throw new Error("Customer was not found!")
     } else {
-      const customerBankCards = await findBankCards(customerFound.id)
       const customerFoundFormatted = builder.customerByTokenResponse(
-        customerFound, customerBankCards
+        customerFound
       )
       activateCustomer(customerFound)
       const { password, ...customerObj } = customerFoundFormatted
-      console.log(`5`, customerObj)
       return customerObj
     }
 
