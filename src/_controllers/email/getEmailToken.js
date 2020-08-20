@@ -1,4 +1,4 @@
-const makeGetEmailCustomer = ({ verifyEmailToken } = {}) => {
+const makeGetEmailCustomer = ({ verifyEmailToken, errorMessages } = {}) => {
   return async function getCustomer(httpRequest) {
     try {
       const { code } = httpRequest.params
@@ -12,13 +12,14 @@ const makeGetEmailCustomer = ({ verifyEmailToken } = {}) => {
         }
       }
     } catch (err) {
+      const { status, body } = errorMessages[err.message] || { status: 400, body: err.message }
       return {
         headers: {
           "Content-Type": "application/json",
         },
-        statusCode: 400,
+        statusCode: status,
         body: {
-          error: err.message,
+          error: body || err.message,
         },
       }
     }

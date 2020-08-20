@@ -1,6 +1,4 @@
-const errorMessages = require("../../error-messages.json")
-
-const makePutCustomer = ({ updateCustomer }) => {
+const makePutCustomer = ({ updateCustomer, errorMessages }) => {
   return async function putCustomer(httpRequest) {
     try{
       const { id } = httpRequest.params

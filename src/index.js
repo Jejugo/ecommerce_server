@@ -8,7 +8,10 @@ const {
   getEmailToken,
   getCustomerByToken,
   postRefreshToken,
-  putCustomer
+  putCustomer,
+  postCheckout,
+  getProducts,
+  getProduct
 } = require('./_controllers')
 
 dotenv.config()
@@ -40,6 +43,13 @@ app.post('/login', expressCallBack(postLogin))
 app.get('/email/verification/:code', redirectCallBack(getEmailToken))
 app.get('/customer/token/:token',  expressCallBack(getCustomerByToken))
 app.post('/refresh/token', expressCallBack(postRefreshToken))
+
+//products
+app.get('/products', expressCallBack(getProducts))
+app.get('/products/:id', expressCallBack(getProduct))
+
+//purchase
+app.post('/checkout', expressCallBack(postCheckout))
 
 app.listen(3002, () => {
   console.log('Server is listening on port 3002.')

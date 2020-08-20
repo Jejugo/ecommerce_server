@@ -1,22 +1,25 @@
-const makePostLogin = ({ loginAction, errorMessages }) => {
-  return async function postLogin(httpRequest){
+const makeGetProduct = ({ retrieveProduct, errorMessages }) => {
+  return async function getProduct(httpRequest){
     try {
       const {
         source = {},
-        username,
-        password
-      } = httpRequest.body
+        id,
+      } = httpRequest.params
       const { ip, headers } = httpRequest
       source.ip = ip
       source.browser = headers["User-Agent"]
       if (headers["Referer"]) {
         source.referer = headers["Referer"]
       }
-      const tokens = await loginAction({ username, password })
+      console.log('passando')
+      console.log(id)
+      const product = await retrieveProduct(id)
   
       return {
         statusCode: 200,
-        body: tokens
+        body: {
+          product
+        }
       }
     }
 
@@ -36,4 +39,4 @@ const makePostLogin = ({ loginAction, errorMessages }) => {
   }
 }
 
-module.exports = makePostLogin
+module.exports = makeGetProduct

@@ -1,6 +1,4 @@
-const errorMessages = require("../../error-messages.json")
-
-const makePostCustomer = ({ registerCustomer } = {}) => {
+const makePostCustomer = ({ registerCustomer, errorMessages } = {}) => {
   return async function postCustomer(httpRequest) {
     try {
       const {

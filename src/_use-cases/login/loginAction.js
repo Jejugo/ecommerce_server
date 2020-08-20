@@ -32,7 +32,6 @@ const makeLoginAction = ({ jwt, bcrypt, Customer }) => {
     try {
       const loginCredentials = login({ username, password })
       const customerFound = await findCustomer(username)
-
       if (customerFound) {
         const isSamePassword = await checkPassword(
           loginCredentials.getPassword(),

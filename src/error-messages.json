@@ -11,7 +11,7 @@
     "status": 400,
     "body": {
       "code": 1,
-      "message": "Usuário não encontrado com os parâmetros fornecidos"
+      "message": "Usuário não encontrado com os parâmetros fornecidos ou conexão de banco perdida."
     }
   }
 }

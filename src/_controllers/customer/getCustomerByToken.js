@@ -1,6 +1,4 @@
-const errorMessages = require("../../error-messages.json")
-
-const makeGetCustomerByToken = ({ retrieveCustomerByToken }) => {
+const makeGetCustomerByToken = ({ retrieveCustomerByToken, errorMessages }) => {
   return async function getCustomerByToken(httpRequest){
     try{
       const {

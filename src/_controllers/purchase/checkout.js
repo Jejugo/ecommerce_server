@@ -1,10 +1,12 @@
-const makePostLogin = ({ loginAction, errorMessages }) => {
-  return async function postLogin(httpRequest){
-    try {
+const makePostCheckout = ({ checkoutAction, errorMessages }) => {
+  return async function postCheckout(httpRequest){
+    try{
       const {
         source = {},
-        username,
-        password
+        token,
+        product,
+        quantity,
+        address
       } = httpRequest.body
       const { ip, headers } = httpRequest
       source.ip = ip
@@ -12,11 +14,15 @@ const makePostLogin = ({ loginAction, errorMessages }) => {
       if (headers["Referer"]) {
         source.referer = headers["Referer"]
       }
-      const tokens = await loginAction({ username, password })
-  
+
+      const body = await checkoutAction({ token, product, quantity, address })
+
       return {
         statusCode: 200,
-        body: tokens
+        body: {
+          message: 'Successfully purchased!',
+          ...body
+        }
       }
     }
 
@@ -36,4 +42,4 @@ const makePostLogin = ({ loginAction, errorMessages }) => {
   }
 }
 
-module.exports = makePostLogin
+module.exports = makePostCheckout
