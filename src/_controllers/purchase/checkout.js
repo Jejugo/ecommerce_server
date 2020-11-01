@@ -3,11 +3,7 @@ const makePostCheckout = ({ checkoutAction, errorMessages }) => {
     try{
       const {
         source = {},
-        payment_method_id,
-        address,
-        product,
-        quantity,
-        customer
+        amount
       } = httpRequest.body
       const { ip, headers } = httpRequest
       source.ip = ip
@@ -16,16 +12,16 @@ const makePostCheckout = ({ checkoutAction, errorMessages }) => {
         source.referer = headers["Referer"]
       }
       headers['setHeader'] = 'HttpOnly;Secure;SameSite=Strict'
-      console.log('chegou aqui', payment_method_id, customer, product, quantity, address)
-      const body = await checkoutAction({ payment_method_id, customer, product, quantity, address })
+      console.log('chegou aqui', amount)
+      const body = await checkoutAction({ amount })
       console.log(body)
-      // return {
-      //   statusCode: 200,
-      //   body: {
-      //     message: 'Successfully purchased!',
-      //     ...body
-      //   }
-      // }
+      return {
+        statusCode: 200,
+        body: {
+          message: 'Successfully purchased!',
+          ...body
+        }
+      }
     }
 
     catch(err){
