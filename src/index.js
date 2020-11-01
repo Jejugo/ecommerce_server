@@ -1,5 +1,6 @@
 const express = require('express')
 const bodyParser = require('body-parser')
+const cookieParser = require('cookie-parser')
 const dotenv = require('dotenv')
 const { 
   getHealth,
@@ -11,7 +12,8 @@ const {
   putCustomer,
   postCheckout,
   getProducts,
-  getProduct
+  getProduct,
+  getProductPrice
 } = require('./_controllers')
 
 dotenv.config()
@@ -34,6 +36,8 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use(cookieParser())
+
 app.get('/health', expressCallBack(getHealth))
 app.post('/register', expressCallBack(postCustomer))
 app.put('/customer/:id', expressCallBack(putCustomer))
@@ -47,7 +51,7 @@ app.post('/refresh/token', expressCallBack(postRefreshToken))
 //products
 app.get('/products', expressCallBack(getProducts))
 app.get('/products/:id', expressCallBack(getProduct))
-
+app.get('/products/price/:id', expressCallBack(getProductPrice))
 //purchase
 app.post('/checkout', expressCallBack(postCheckout))
 

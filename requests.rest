@@ -24,4 +24,4 @@ GET http://localhost:3002/customer/token/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.ey
 
 ###Listing all products
 
-GET http://localhost:3002/products/prod_Hrl5vAUSRiQa4g
+GET http://localhost:3002/products/price/prod_Hrl5vAUSRiQa4g

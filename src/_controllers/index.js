@@ -14,6 +14,7 @@ const makePostCheckout = require('./purchase/checkout')
 //Products
 const makeGetProducts = require('./product/getProducts')
 const makeGetProduct = require('./product/getProduct')
+const makeGetProductPrice = require('./product/getProductPrice')
 
 const jwt = require('jsonwebtoken')
 const errorMessages = require('../error-messages.json')
@@ -27,7 +28,7 @@ const { updateCustomer } = require('../_use-cases')
 const { checkoutAction } = require('../_use-cases')
 const { retrieveProducts } = require('../_use-cases')
 const { retrieveProduct } = require('../_use-cases')
-
+const { retrieveProductPrice } = require('../_use-cases')
 
 const getHealth = makeGetHealth()
 const postCustomer = makePostCustomer({ registerCustomer, errorMessages })
@@ -39,6 +40,7 @@ const putCustomer = makePutCustomer({ updateCustomer, errorMessages })
 const postCheckout = makePostCheckout({ checkoutAction, errorMessages })
 const getProducts = makeGetProducts({ retrieveProducts, errorMessages })
 const getProduct = makeGetProduct({ retrieveProduct, errorMessages })
+const getProductPrice = makeGetProductPrice({ retrieveProductPrice, errorMessages })
 
 module.exports = {
   getHealth,
@@ -50,5 +52,6 @@ module.exports = {
   putCustomer,
   postCheckout,
   getProducts,
-  getProduct
+  getProduct,
+  getProductPrice
 }

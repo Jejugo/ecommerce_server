@@ -7,10 +7,10 @@ const makeUpdateCustomer = require('./customer/updateCustomer')
 const makeCheckoutAction = require('./purchase/checkoutAction')
 const makeRetrieveProducts = require('./product/retrieveProducts')
 const makeRetrieveProduct = require('./product/retrieveProduct')
+const makeRetrieveProductPrice = require('./product/retrieveProductPrice')
 
 const bcrypt = require('bcrypt')
-const { Customer } = require('../models')
-const { Address } = require('../models')
+const { Customer, Address, Customer_Stripe } = require('../models')
 const nodemailer = require("nodemailer")
 const { google } = require("googleapis")
 const jwt = require('jsonwebtoken')
@@ -24,9 +24,10 @@ const verifyEmailToken = makeVerifyEmailToken({ jwt, Customer })
 const retrieveCustomerByToken = makeRetrieveCustomerByToken({ Customer, Address, jwt, builder })
 const loginAction = makeLoginAction({ jwt, bcrypt, Customer })
 const updateCustomer = makeUpdateCustomer({ Customer, Address })
-const checkoutAction = makeCheckoutAction({ stripe, uuid })
+const checkoutAction = makeCheckoutAction({ stripe, uuid, Customer_Stripe })
 const retrieveProducts = makeRetrieveProducts({ stripe })
 const retrieveProduct = makeRetrieveProduct({ stripe })
+const retrieveProductPrice = makeRetrieveProductPrice({ stripe })
 
 
 module.exports = {
@@ -38,5 +39,6 @@ module.exports = {
   updateCustomer,
   checkoutAction,
   retrieveProducts,
-  retrieveProduct
+  retrieveProduct,
+  retrieveProductPrice
 }
