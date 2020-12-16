@@ -8,7 +8,6 @@ const makePutCustomer = ({ updateCustomer, errorMessages }) => {
         customer
       } = httpRequest.body
   
-      console.log('passei pelo controller, ', customer)
       const body = await updateCustomer({ id, customer })
   
       return {

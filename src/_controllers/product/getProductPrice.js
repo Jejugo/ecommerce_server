@@ -9,7 +9,6 @@ const makeGetProductPrice = ({ retrieveProductPrice, errorMessages }) => {
       source.ip = ip
 
       const productPricing = await retrieveProductPrice({ id })
-      console.log(productPricing)
   
       return {
         statusCode: 200,

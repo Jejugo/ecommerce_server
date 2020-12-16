@@ -13,7 +13,6 @@ module.exports = (controller) => {
         'User-Agent': req.get('User-Agent')
       }
     }
-    console.log('ha')
     controller(httpRequest)
       .then(({ headers, statusCode, url, query, params }) => {
         if(headers){

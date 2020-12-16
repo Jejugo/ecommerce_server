@@ -3,7 +3,8 @@ const makePostCheckout = ({ checkoutAction, errorMessages }) => {
     try{
       const {
         source = {},
-        amount
+        amount,
+        customer
       } = httpRequest.body
       const { ip, headers } = httpRequest
       source.ip = ip
@@ -12,9 +13,7 @@ const makePostCheckout = ({ checkoutAction, errorMessages }) => {
         source.referer = headers["Referer"]
       }
       headers['setHeader'] = 'HttpOnly;Secure;SameSite=Strict'
-      console.log('chegou aqui', amount)
-      const body = await checkoutAction({ amount })
-      console.log(body)
+      const body = await checkoutAction({ amount, customer })
       return {
         statusCode: 200,
         body: {
@@ -26,7 +25,6 @@ const makePostCheckout = ({ checkoutAction, errorMessages }) => {
 
     catch(err){
       const { status, body } = errorMessages[err.message] || { status: 400, body: err.message }
-      console.log(err)
 
       return {
         headers: {

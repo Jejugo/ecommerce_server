@@ -11,8 +11,6 @@ const makeGetProduct = ({ retrieveProduct, errorMessages }) => {
       if (headers["Referer"]) {
         source.referer = headers["Referer"]
       }
-      console.log('passando')
-      console.log(id)
       const product = await retrieveProduct(id)
   
       return {
