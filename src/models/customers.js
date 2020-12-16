@@ -4,7 +4,8 @@ module.exports = (sequelize, DataTypes) => {
     securityNumber: DataTypes.STRING,
     email: DataTypes.STRING,
     password: DataTypes.STRING,
-    active: DataTypes.BOOLEAN
+    active: DataTypes.BOOLEAN,
+    stripeId: DataTypes.STRING
   });
 
   //m x n relationship

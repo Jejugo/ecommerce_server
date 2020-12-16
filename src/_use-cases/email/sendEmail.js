@@ -3,10 +3,10 @@ const makeSendEmail = ({ nodemailer, google } = {}) => {
   const originEmail = "goes.jeffjulian@gmail.com"
   const clientId =
     "54725897049-pag81lj4e15hok6s4mvkd94eclj3bv0r.apps.googleusercontent.com"
-  const clientSecret = "bIrTT8XUwB3pZFZ1uDYAIy_Z"
-  const refreshToken = '1//04yrbDCaYlOCoCgYIARAAGAQSNwF-L9Irr4gTu7pdnJY61JLXhUubws9GVhmGHxcF3cTAGCslB-8bQp7-350cENSnhnzS8JfrQnk'
+  const clientSecret = "qhvS5-xJeYHs8nL0r4-iHZkC"
+  const refreshToken = '1//04y5rzzQJRNyxCgYIARAAGAQSNwF-L9Ir1C8VJyb1fuhXxM-HttmmquI7NgXv8r-vgZfiE_WfGB-mL4acw_FxvZiocdaM2Wce9ZA'
 
-  return function sendEmail({ name, customerEmail, emailToken }) {
+  return async function sendEmail({ name, customerEmail, emailToken }) {
     //google authentication
     const OAuth2 = google.auth.OAuth2
 
@@ -21,7 +21,7 @@ const makeSendEmail = ({ nodemailer, google } = {}) => {
       refresh_token: refreshToken,
     })
 
-    const accessToken = oauth2Client.getAccessToken()
+    const accessToken = await oauth2Client.getAccessToken()
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
@@ -48,6 +48,7 @@ const makeSendEmail = ({ nodemailer, google } = {}) => {
 
     transporter.sendMail(mailOptions, (error, response) => {
       if (error) {
+        console.log(`ENTROU AQUI`)
         throw Error(error)
       }
       smtpTransport.close()

@@ -9,6 +9,7 @@
   },
   "scripts": {
     "dev": "cp config/config.dev.json config/index.json; nodemon src/index.js",
+    "dev:inspect": "cp config/config.dev.json config/index.json; node --inspect src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "sequelize:migrate": "npx sequelize-cli db:migrate --env sequelize",
     "docker:run": "docker run -it -p 3002:3002  ecommerce-service:latest",

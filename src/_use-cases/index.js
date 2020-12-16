@@ -10,7 +10,7 @@ const makeRetrieveProduct = require('./product/retrieveProduct')
 const makeRetrieveProductPrice = require('./product/retrieveProductPrice')
 
 const bcrypt = require('bcrypt')
-const { Customer, Address, Customer_Stripe } = require('../models')
+const { Customer, Address } = require('../models')
 const nodemailer = require("nodemailer")
 const { google } = require("googleapis")
 const jwt = require('jsonwebtoken')
@@ -19,12 +19,12 @@ const stripe = require('stripe')('sk_test_51HEoDCLSuvyhvVGumaaei3zEpEYlpaOadJeRp
 const { v4: uuid } = require('uuid');
 
 const sendEmail = makeSendEmail({ nodemailer, google })
-const registerCustomer = makeRegisterCustomer({ bcrypt, Customer, sendEmail, jwt })
+const registerCustomer = makeRegisterCustomer({ bcrypt, Customer, sendEmail, jwt, stripe })
 const verifyEmailToken = makeVerifyEmailToken({ jwt, Customer })
 const retrieveCustomerByToken = makeRetrieveCustomerByToken({ Customer, Address, jwt, builder })
 const loginAction = makeLoginAction({ jwt, bcrypt, Customer })
 const updateCustomer = makeUpdateCustomer({ Customer, Address })
-const checkoutAction = makeCheckoutAction({ stripe, uuid, Customer_Stripe })
+const checkoutAction = makeCheckoutAction({ stripe, uuid, Customer })
 const retrieveProducts = makeRetrieveProducts({ stripe })
 const retrieveProduct = makeRetrieveProduct({ stripe })
 const retrieveProductPrice = makeRetrieveProductPrice({ stripe })

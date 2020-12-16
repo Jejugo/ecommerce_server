@@ -1,21 +1,24 @@
-const makeCheckoutAction = ({ stripe }) => {
+const makeCheckoutAction = ({ stripe, Customer }) => {
+
+  const findCustomer = (email) =>
+  Customer.findOne({
+    where: {
+      email,
+    },
+    raw: true
+  })
+
   return async function checkoutAction({ amount, customer }){
-    console.log('realizando o pagamento', amount)
-    console.log('usuario: ', customer)
-    const newUser = await stripe.customers.create({
-        ...customer,
-        description: `New user created: ${customer.name}`,
-    })
+    const { stripeId } = await findCustomer(customer.email)
 
     const paymentIntent = await stripe.paymentIntents.create({
       amount: amount*10,
       currency: 'brl',
-      customer: newUser.id
+      customer: stripeId
     })
 
     return {
-      paymentIntent,
-      newUser
+      paymentIntent
     }
   }
 }
