@@ -1,9 +1,9 @@
 {
   "sequelize": {
-    "host": "104.154.237.167",
+    "host": "127.0.0.1",
     "database": "ecommerce_db",
     "username": "root",
-    "password": "admin",
+    "password": "password",
     "dialect": "mysql"
   }
 }

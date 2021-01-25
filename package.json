@@ -9,9 +9,10 @@
   },
   "scripts": {
     "dev": "cp config/config.dev.json config/index.json; nodemon src/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev:debug": "cp config/config.dev.json config/index.json; node --inspect src/index.js",
     "sequelize:migrate": "npx sequelize-cli db:migrate --env sequelize",
     "docker:run": "docker run -it -p 3002:3002  ecommerce-service:latest",
+    "docker:db:run": "docker run --rm --name=my-mysql --env MYSQL_ROOT_PASSWORD=password --detach --publish 3306:3306 mysql",
     "sequelize:generate:migration": "npx sequelize migration:generate --name [name_of_your_migration]"
   },
   "author": "Jeff Goes",
