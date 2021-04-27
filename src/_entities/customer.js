@@ -1,6 +1,6 @@
 const makeCustomer = ({ isEmailValid } = {}) => {
   return function customer({ name, email, password, securityNumber, active = false, createdOn = Date.now(), modifiedOn = Date.now() }){
-    
+
     if(!name){
       throw new Error('Name must be provided.')
     }

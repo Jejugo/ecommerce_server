@@ -1,25 +1,39 @@
-const makeCheckoutAction = ({ stripe }) => {
+const makeCheckoutAction = ({ stripeMethods, Customer }) => {
 
-  const createStripeCustomer = async (customer) => {
-    const newUser = await stripe.customers.create({
-      ...customer,
-      description: `New user created: ${customer.name}`,
-    })
+  const saveToStripe = ({ name, email }) => stripeMethods.createUser({
+    name: name,
+    email: email,
+  }).catch(err => {
+    console.log('error: ', err)
+  })
 
-    const paymentIntent = await stripe.paymentIntents.create({
-      amount: amount * 10,
-      currency: 'brl',
-      customer: newUser.id
-    })
-
-    return {
-      newUser,
-      paymentIntent
+  const updateCustomer = (customer) => Customer.update(
+    {
+      stripeId: customer.id
+    },
+    {
+      where: {
+        email: customer.email,
+      },
     }
-  }
+  ).catch(err => {
+    console.error('erro:', err)
+    new Error('ERROR_FIND_CUSTOMER')
+  })
 
   return async function checkoutAction({ amount, customer }) {
-    return createStripeCustomer(customer)
+    const retrievedUser = await stripeMethods.isStripeUser(customer)
+    if (!retrievedUser || retrievedUser.deleted) {
+      customer = await saveToStripe(customer)
+      console.log('atualizando banco para:', customer)
+      await updateCustomer(customer)
+    }
+
+    const paymentIntent = await stripeMethods.createPaymentIntent(amount, customer)
+    return {
+      paymentIntent,
+      customer
+    }
   }
 }
 
