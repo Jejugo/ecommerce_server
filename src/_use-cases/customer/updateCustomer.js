@@ -1,61 +1,65 @@
 const makeUpdateCustomer = ({ Customer, Address }) => {
-  const updateCustomerById = async (id, customer) =>{
-    const CustomerInstance = await Customer.findOne({where: { id }})
+  const updateCustomerById = async (id, customer) => {
+    const CustomerInstance = await Customer.findOne({ where: { id } });
 
-    CustomerInstance.name = customer.name,
-    CustomerInstance.email = customer.email
-    CustomerInstance.updatedAt = new Date().toISOString()
-    CustomerInstance.save()
+    (CustomerInstance.name = customer.name),
+      (CustomerInstance.email = customer.email);
+    CustomerInstance.updatedAt = new Date().toISOString();
+    CustomerInstance.save();
 
-    return CustomerInstance
-  }
+    return CustomerInstance;
+  };
 
   const updateAddress = async (customerUpdated, address) => {
     //for now, customer can only have ONE address.
     //That is why Im getting only the first occurance
-    const [ AddressInst ] = await customerUpdated.getAddress()
-    if(AddressInst){
-      return AddressInst.update({
+    try {
+      const [AddressInst] = await customerUpdated.getAddress();
+      if (AddressInst) {
+        return AddressInst.update({
+          street: address.street,
+          neighborhood: address.neighborhood,
+          city: address.city,
+          number: address.number,
+          zipcode: address.zipcode,
+          complement: address.complement,
+          updatedAt: new Date().toISOString(),
+        });
+      }
+
+      const addressCreated = await Address.create({
         street: address.street,
         neighborhood: address.neighborhood,
         number: address.number,
+        city: address.city,
         zipcode: address.zipcode,
         complement: address.complement,
-        updatedAt: new Date().toISOString()
-      })
+        updatedAt: new Date().toISOString(),
+      });
+
+      const id = addressCreated.get({ plain: true }).id;
+      customerUpdated.setAddress([id]);
+    } catch (err) {
+      console.error('There was an error saving the address: ', err);
     }
-
-    const addressCreated = await Address.create({
-      street: address.street,
-      neighborhood: address.neighborhood,
-      number: address.number,
-      zipcode: address.zipcode,
-      complement: address.complement,
-      updatedAt: new Date().toISOString()
-    })
-
-    const id = addressCreated.get({ plain: true }).id
-    customerUpdated.setAddress([id])
-  }
-  
+  };
 
   return async function updateCustomer({ id, customer }) {
+    const customerUpdated = await updateCustomerById(id, customer.personalData);
+    await updateAddress(customerUpdated, customer.address);
 
-    const customerUpdated = await updateCustomerById(id, customer.personalData)
-    await updateAddress(customerUpdated, customer.address)
-    
-    const customerRaw = customerUpdated.get({ plain: true })
+    const customerRaw = customerUpdated.get({ plain: true });
 
-    const { password, ...customerData } = customerRaw
+    const { password, ...customerData } = customerRaw;
 
     return {
       status: 'success',
       ...customerData,
       address: {
-        ...customer.address
-      }
-    }
-  }
-}
+        ...customer.address,
+      },
+    };
+  };
+};
 
-module.exports = makeUpdateCustomer
+module.exports = makeUpdateCustomer;

@@ -11,11 +11,12 @@ const customerByTokenResponse = (customer) => ({
     id: customer["address.id"],
     street: customer["address.street"],
     neighborhood: customer["address.neighborhood"],
+    city: customer["address.city"],
     number: customer["address.number"],
     zipcode: customer["address.zipcode"],
     complement: customer["address.complement"],
     createdAt: customer["address.createdAt"],
-    updatedAt: customer["address.updatedAt"],
+    updatedAt: customer["address.updatedAt"]
   }
 })
 

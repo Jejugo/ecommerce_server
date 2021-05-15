@@ -4,7 +4,8 @@ const makeCheckoutAction = ({ stripeMethods, Customer }) => {
     name: name,
     email: email,
   }).catch(err => {
-    console.log('error: ', err)
+    console.error('Error saving to stripe: ', err)
+    new Error('ERROR_SAVING_STRIPE')
   })
 
   const updateCustomer = (customer) => Customer.update(
@@ -25,7 +26,6 @@ const makeCheckoutAction = ({ stripeMethods, Customer }) => {
     const retrievedUser = await stripeMethods.isStripeUser(customer)
     if (!retrievedUser || retrievedUser.deleted) {
       customer = await saveToStripe(customer)
-      console.log('atualizando banco para:', customer)
       await updateCustomer(customer)
     }
 

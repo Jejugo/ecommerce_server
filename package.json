@@ -7,6 +7,9 @@
     "type": "git",
     "url": "git:git@github.com:Jejugo/ecommerce_server.git"
   },
+  "prettier": {
+    "singleQuote": true
+  },
   "scripts": {
     "dev": "cp config/config.dev.json config/index.json; nodemon src/index.js",
     "dev:debug": "cp config/config.dev.json config/index.json; node --inspect src/index.js",

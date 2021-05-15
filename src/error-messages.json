@@ -21,5 +21,13 @@
       "code": 1,
       "message": "Usuário não encontrado na base de dados do Stripe."
     }
+  },
+
+  "ERROR_SAVING_STRIPE": {
+    "status": 500,
+    "body":{
+      "code": 1,
+      "message": "Houve um erro quando ao salvar esse usuário na plataoforma de pagamento - Stripe"
+    }
   }
 }
